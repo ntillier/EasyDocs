@@ -216,16 +216,8 @@ const update = () => {
     }
   } else if (directories.has(path)) {
     exists = true;
-    if (cache.has(path + '/')) {
-      if (cache.get(path + '/')) {
-        showPath(path + '/');
-      } else {
-        current = directories.get(path);
-        openNav();
-      }
-    } else {
-      return loadPath(path + '/');
-    }
+    current = directories.get(path);
+    openNav();
   } else {
     exists = false;
     current = undefined;
@@ -235,9 +227,11 @@ const update = () => {
   updateTableOfContent();
   
   const body = document.getElementsByClassName('body')[0];
-  if (body) {
+
+  if (body && !window.location.hash && !isFirstPage) {
     body.scrollTop = 0;
   }
+  isFirstPage = false;
 }
 
 const navigate = (path) => {
@@ -249,7 +243,7 @@ const navigate = (path) => {
 
 const showCurrentHash = () => {
   if (window.location.hash) {
-    document.getElementById(window.location.hash.substring(1))?.scrollIntoView();
+    contentElement.querySelector(window.location.hash)?.scrollIntoView();
   } else {
     document.getElementById('content')?.scrollTo({ top: 0, behavior: 'smooth' });
   }
@@ -411,7 +405,6 @@ const content = {
     if (isFirstPage) {
       observer = new IntersectionObserver(observerCallback, { ...observerOptions, root: document.querySelector('.body') });
       showCurrentHash();
-      isFirstPage = false;
     }
   },
   view: () => m('div', { class: 'content', id: 'content' }, [
