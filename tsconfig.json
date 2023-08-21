@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "skipLibCheck": true,
+    "noEmitOnError": true,
+    "module": "commonjs",
+    "removeComments": true,
+    "sourceMap": true,
+    "target": "es6",
+    "outDir": "dist",
+    "strict": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,                       
+  },
+  "exclude":[
+    "./node_modules",
+    "./dist"
+  ],
+  "include": [
+    "src"
+, "assets"  ],
+  "files": [
+    "./src/index.d.ts"
+  ]
+}

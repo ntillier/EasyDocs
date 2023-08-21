@@ -1,0 +1,6 @@
+{
+  "execMap": {
+      "ts": "ts-node"
+  },
+  "exec": "tsc && npm i -g"
+}
