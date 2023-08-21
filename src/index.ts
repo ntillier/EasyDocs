@@ -74,11 +74,11 @@ const createApp = (ssr: DocsSSR) => {
     decorateReply: false
   });
 
-  app.setErrorHandler((error, request, reply) => {
+  app.setErrorHandler((error: any, request: any, reply: any) => {
     log('error', error.message);
   });
 
-  app.setNotFoundHandler((request, reply) => {
+  app.setNotFoundHandler((request: any, reply: any) => {
     reply
       .type('text/html')
       .send(ssr.generate(request.url));
@@ -88,7 +88,7 @@ const createApp = (ssr: DocsSSR) => {
     {
       port: 3030
     },
-    (err, address) => {
+    (err: any, address: string) => {
       if (err) {
         throw err;
       }
@@ -175,13 +175,25 @@ program
 
     const copyFiles = (from: string, to: string) => {
       for (const file of fs.readdirSync(from)) {
-        fs.copyFileSync(`${from}/${file}`, `${to}/${file}`);
+        const path = `${from}/${file}`;
+        const stat = fs.lstatSync(path);
+        if (stat.isFile()) {
+          fs.copyFileSync(`${from}/${file}`, `${to}/${file}`);
+        } else if (stat.isDirectory()) {
+          fs.mkdirSync(`${to}/${file}`);
+          copyFiles(path, `${to}/${file}`);
+        }
       }
     }
 
     createDir('');
+    createDir('/api');
+    createDir('/api/doc');
     saveFiles(files.sitemap);
+
+    write('/404.html', ssr.generate(undefined))
     
+    copyFiles(getPath('/.static/docs'), getPath('/.build/api/doc'))
     copyFiles(getPath('/public'), getPath('/.build'));
     copyFiles(HOME + '/assets', getPath('/.build'));
   });

@@ -1,6 +1,6 @@
 {
-  "name": "easydocs",
-  "version": "1.0.0",
+  "name": "@nathanti/easydocs",
+  "version": "1.0.1",
   "license": "MIT",
   "author": "Nathan TILLIER",
   "main": "./dist/index.js",

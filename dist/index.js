@@ -150,11 +150,23 @@ commander_1.program
     };
     const copyFiles = (from, to) => {
         for (const file of fs_1.default.readdirSync(from)) {
-            fs_1.default.copyFileSync(`${from}/${file}`, `${to}/${file}`);
+            const path = `${from}/${file}`;
+            const stat = fs_1.default.lstatSync(path);
+            if (stat.isFile()) {
+                fs_1.default.copyFileSync(`${from}/${file}`, `${to}/${file}`);
+            }
+            else if (stat.isDirectory()) {
+                fs_1.default.mkdirSync(`${to}/${file}`);
+                copyFiles(path, `${to}/${file}`);
+            }
         }
     };
     createDir('');
+    createDir('/api');
+    createDir('/api/doc');
     saveFiles(files.sitemap);
+    write('/404.html', ssr.generate(undefined));
+    copyFiles(getPath('/.static/docs'), getPath('/.build/api/doc'));
     copyFiles(getPath('/public'), getPath('/.build'));
     copyFiles(HOME + '/assets', getPath('/.build'));
 });

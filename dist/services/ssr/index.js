@@ -61,10 +61,11 @@ class DocsSSR {
     </main>`);
     }
     generate(path) {
-        const data = getFile(`${HOME}/.static/docs/${path.endsWith('/') ? path.slice(0, -1) : path}.json`);
+        const data = path ? getFile(`${HOME}/.static/docs/${path.endsWith('/') ? path.slice(0, -1) : path}.json`) : null;
         if (data) {
             return this.template.replace('$__CONTENT__$', data.content);
         }
+        return this.template.replace('$__CONTENT__$', '');
     }
 }
 exports.default = DocsSSR;

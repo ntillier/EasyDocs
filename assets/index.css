@@ -318,6 +318,9 @@ nav a[open]>svg {
   max-height: 400px;
   margin: 24px auto;
 }
+.article p {
+  line-height: 1.6rem;
+}
 
 aside {
   position: sticky;
@@ -419,7 +422,7 @@ aside>a.active {
 }
 
 .admonition-title::before {
-  vertical-align: top;
+  vertical-align: middle;
   width: 1.4em;
   height: 1.4em;
   display: inline-block;

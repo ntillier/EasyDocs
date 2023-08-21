@@ -12,10 +12,10 @@ const fetchJSON = (url, options) => {
         if (res.ok) {
           return resolve(res.json());
         }
-        fetchJSON(url, options).then(resolve);
+        setTimeout(() => fetchJSON(url, options).then(resolve), 2000);
       })
       .catch(error => {
-        fetchJSON(url, options).then(resolve);
+        setTimeout(() => fetchJSON(url, options).then(resolve), 2000);
       })
   });
 }

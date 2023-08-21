@@ -72,11 +72,12 @@ export default class DocsSSR {
     </main>`)
   }
 
-  generate(path: string) {
-    const data = getFile(`${HOME}/.static/docs/${path.endsWith('/') ? path.slice(0, -1) : path}.json`);
+  generate(path: string | undefined) {
+    const data = path ? getFile(`${HOME}/.static/docs/${path.endsWith('/') ? path.slice(0, -1) : path}.json`): null;
 
     if (data) {
       return this.template.replace('$__CONTENT__$', data.content);
     }
+    return this.template.replace('$__CONTENT__$', '');
   }
 }
