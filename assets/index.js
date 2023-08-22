@@ -319,7 +319,7 @@ const navFragment = {
 const notFound = {
   view: () => m('div', { class: 'notfound' }, [
     m('h1', 'O.o'),
-    m('span', 'Page not found :/')
+    m('span', 'Page not found')
   ])
 };
 

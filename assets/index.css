@@ -632,6 +632,18 @@ table tr:last-child td:last-child {
   text-overflow: ellipsis;
 }
 
+.notfound {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: calc(80vh - 80px);
+}
+.notfound h1 {
+  font-size: 48px;
+  color: var(--blue);
+}
+
 .content .links {
   display: none;
 }
