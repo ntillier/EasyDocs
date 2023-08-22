@@ -225,12 +225,7 @@ const update = () => {
 
   m.redraw.sync();
   updateTableOfContent();
-  
-  const body = document.getElementsByClassName('body')[0];
-
-  if (body && !window.location.hash && !isFirstPage) {
-    body.scrollTop = 0;
-  }
+  showCurrentHash();
   isFirstPage = false;
 }
 
@@ -243,9 +238,9 @@ const navigate = (path) => {
 
 const showCurrentHash = () => {
   if (window.location.hash) {
-    contentElement.querySelector(window.location.hash)?.scrollIntoView();
+    document.querySelector(`.body ${window.location.hash}`)?.scrollIntoView();
   } else {
-    document.getElementById('content')?.scrollTo({ top: 0, behavior: 'smooth' });
+    document.querySelector('.body').scrollTop = 0;
   }
 }
 
@@ -401,6 +396,19 @@ const header = () => ({
 const content = {
   onupdate() {
     contentElement = document.getElementById('content');
+
+    for (const link of contentElement.querySelectorAll('a[href]')) {
+      if (new URL(document.baseURI).origin === new URL(link.href, document.baseURI).origin) {
+        link.target = undefined;
+        
+        if (!link.href.startsWith('#')) {
+          link.onclick = (e) => {
+            e.preventDefault();
+            navigate(link.href);
+          }
+        }
+      }
+    }
 
     if (isFirstPage) {
       observer = new IntersectionObserver(observerCallback, { ...observerOptions, root: document.querySelector('.body') });
