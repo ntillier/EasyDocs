@@ -36,7 +36,7 @@ const createConfig = () => fs.writeFileSync(process.cwd() + '/docs.config.json',
 }
 `);
 
-const getConfig = () => {
+const getConfig = (): EasyDocsConfig => {
   try {
     return JSON.parse(fs.readFileSync(getPath('/docs.config.json')).toString());
   } catch (_) {

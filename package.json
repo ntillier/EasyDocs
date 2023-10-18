@@ -26,7 +26,8 @@
     "marked-highlight": "^2.0.4",
     "marked-katex-extension": "^3.0.3",
     "marked-linkify-it": "^3.1.1",
-    "marked-mangle": "^1.1.2"
+    "marked-mangle": "^1.1.2",
+    "sitemap": "^7.1.1"
   },
   "devDependencies": {
     "ts-node": "^10.9.1",

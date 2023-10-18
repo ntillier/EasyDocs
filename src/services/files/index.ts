@@ -23,6 +23,8 @@ export type File = {
   link: string;
   label: string;
   index: Index;
+  priority: number;
+  modifiedAt: string;
 }
 
 export type FolderOrFile = Folder | File;
@@ -64,7 +66,7 @@ export default class DocsFiles {
     fs.rmSync(`${process.cwd()}/.static/docs`, { recursive: true, force: true });
   }
 
-  loadFile(relativePath: string, currentAbsolutePath: string, path: string): File | undefined {
+  loadFile(relativePath: string, currentAbsolutePath: string, path: string, stats: fs.Stats): File | undefined {
     if (!path.endsWith('.md') || path === "config.json") {
       if (path !== "config.json") {
         log('error', `docs${currentAbsolutePath.substring(this.config.basePath.length)} isn't a valid markdown file. Markdown files should end with '.md'`);
@@ -78,7 +80,9 @@ export default class DocsFiles {
       type: 0,
       link: join(relativePath, stringToSlug(data.slug ?? path.slice(0, -3))),
       label: data.label ?? path.slice(0, -3),
-      index: data.index ?? 'no-index'
+      index: data.index ?? 'no-index',
+      priority: data.priority ?? 1,
+      modifiedAt: new Date(stats.mtime).toISOString()
     };
 
     if (file.label?.length === 0) {
@@ -128,7 +132,7 @@ export default class DocsFiles {
 
       if (stats.isFile()) {
 
-        const file = this.loadFile(relativePath, currentAbsolutePath, path === 'index.md' ? '.md' : path);
+        const file = this.loadFile(relativePath, currentAbsolutePath, path === 'index.md' ? '.md' : path, stats);
 
         if (file) {
           current.children.push(file);

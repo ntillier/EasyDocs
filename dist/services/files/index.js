@@ -29,8 +29,8 @@ class DocsFiles {
     clear() {
         fs_1.default.rmSync(`${process.cwd()}/.static/docs`, { recursive: true, force: true });
     }
-    loadFile(relativePath, currentAbsolutePath, path) {
-        var _a, _b, _c, _d;
+    loadFile(relativePath, currentAbsolutePath, path, stats) {
+        var _a, _b, _c, _d, _e;
         if (!path.endsWith('.md') || path === "config.json") {
             if (path !== "config.json") {
                 (0, logger_1.log)('error', `docs${currentAbsolutePath.substring(this.config.basePath.length)} isn't a valid markdown file. Markdown files should end with '.md'`);
@@ -42,9 +42,11 @@ class DocsFiles {
             type: 0,
             link: join(relativePath, (0, markdown_1.stringToSlug)((_a = data.slug) !== null && _a !== void 0 ? _a : path.slice(0, -3))),
             label: (_b = data.label) !== null && _b !== void 0 ? _b : path.slice(0, -3),
-            index: (_c = data.index) !== null && _c !== void 0 ? _c : 'no-index'
+            index: (_c = data.index) !== null && _c !== void 0 ? _c : 'no-index',
+            priority: (_d = data.priority) !== null && _d !== void 0 ? _d : 1,
+            modifiedAt: new Date(stats.mtime).toISOString()
         };
-        if (((_d = file.label) === null || _d === void 0 ? void 0 : _d.length) === 0) {
+        if (((_e = file.label) === null || _e === void 0 ? void 0 : _e.length) === 0) {
             file.label = 'Introduction';
         }
         if (file.link.endsWith('/') && file.link.length > 1) {
@@ -77,7 +79,7 @@ class DocsFiles {
             const currentAbsolutePath = `${absolutePath}/${path}`;
             const stats = fs_1.default.lstatSync(currentAbsolutePath);
             if (stats.isFile()) {
-                const file = this.loadFile(relativePath, currentAbsolutePath, path === 'index.md' ? '.md' : path);
+                const file = this.loadFile(relativePath, currentAbsolutePath, path === 'index.md' ? '.md' : path, stats);
                 if (file) {
                     current.children.push(file);
                     this.converter.set(currentAbsolutePath, (_d = current.children.at(-1)) === null || _d === void 0 ? void 0 : _d.link);

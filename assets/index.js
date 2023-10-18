@@ -154,6 +154,7 @@ const generateMaps = () => {
 }
 
 const loadPath = (path) => {
+  loading = true;
   fetchJSON(`/api/doc${path}.json`)
     .then((data) => {
       cache.set(path, data);
@@ -317,10 +318,12 @@ const navFragment = {
 };
 
 const notFound = {
-  view: () => m('div', { class: 'notfound' }, [
-    m('h1', 'O.o'),
-    m('span', 'Page not found')
-  ])
+  view: () => m('div', { class: 'notfound' }, 
+    loading ? undefined : [
+      m('h1', 'O.o'),
+      m('span', 'Page not found')
+    ]
+  )
 };
 
 const redirect = {
