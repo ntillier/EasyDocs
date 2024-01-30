@@ -34,3 +34,5 @@ I plan to add new features gradually.
 - [ ] Improve the Table of Contents
 - [ ] Improve extensibility & customization
 - [ ] Improve SEO and accessibility
+- [ ] Add search input in the navbar
+- [ ] Add markdown functionnalities (tabs, details, custom components)
