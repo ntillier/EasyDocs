@@ -23,3 +23,14 @@ easydocs dev
 ```bash
 easydocs build
 ```
+
+# Roadmap
+I plan to add new features gradually.
+
+- [ ] Improve iframes
+- [ ] Add icons to links
+- [ ] Add the possibility to use base paths
+- [ ] Add multilanguage feature
+- [ ] Improve the Table of Contents
+- [ ] Improve extensibility & customization
+- [ ] Improve SEO and accessibility
