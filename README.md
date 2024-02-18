@@ -2,6 +2,9 @@
 
 **EasyDocs** is a *lightweight* & *easy-to-use* documentation website generator. Whether you're a developer, a content creator, or a business owner, EasyDocs empowers you to effortlessly craft well-organized and visually appealing documentation using the power of Markdown.
 
+> [!NOTE]  
+> I am redoing EasyDocs from scratch with lots of new features. I have many important tasks to finish, but I hope it will be done in around 3-4 months.
+
 [Demo](https://easydocs.onrender.com/) - [Website](https://easydocs.onrender.com/)
 
 ## Install
